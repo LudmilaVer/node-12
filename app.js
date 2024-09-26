@@ -53,15 +53,20 @@ const startServer = async () => {
       
 
     app.post('/products', async (req, res) => {
-        const { name, price, description } = req.body;
-        try {
-            const result = await db.collection('products').insertOne({ name, price, description })
-            res.status(201).json(result)
-        } catch (error) {
-            res.status(500).json({ message: 'Error creating product', error })
-        }
-    })
+      const product = {
+        "_id": new ObjectId("66f52276f2c4bb4d0538afea"), // используйте ObjectId для идентификатора
+        "name": "Sample Product",
+        "price": 19.99,
+        "description": "This is a sample product"
+    };
 
+    try {
+        const result = await db.collection('products').insertOne(product);
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating product', error });
+    }
+})
     app.put('/products/:id', async (req, res) => {
         const { name, price, description } = req.body;
 
